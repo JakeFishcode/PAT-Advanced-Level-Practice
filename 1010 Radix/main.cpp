@@ -8,7 +8,7 @@ long long int us_tag(string N,int radix,int max)
     long long int sum=0;
     if(radix>max || radix<22)
     {
-        return 0;
+        //return 0;
     }
     for(int i=0;i<N.size();i++)
     {

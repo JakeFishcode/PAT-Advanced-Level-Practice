@@ -1,16 +1,18 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <stdio.h>
 using namespace std;
 struct DATA
 {
-    string number;
+    long long number;
     int score;
     int location_number;
     int local_rank;
     int final_rank;
 };
 void Q_sort(DATA *temp,int size);
+void Q_sort2(DATA *temp,int size);
 void give_local_rank(DATA *temp,int num,int size);
 void give_final_rank(DATA *temp,int num,int size);
 int main()
@@ -52,7 +54,8 @@ int main()
     cout<<count<<endl;
     for(int i=0;i<count;i++)
     {
-        cout << data[i].number <<" "<<data[i].final_rank<<" "<<data[i].location_number
+        printf("%013lld",data[i].number);
+        cout <<" "<<data[i].final_rank<<" "<<data[i].location_number
             <<" "<<data[i].local_rank<<endl;
     }
     return 0;
@@ -66,6 +69,7 @@ int get_CD(DATA *temp,int N,int num)
     }
     else
     {
+
         return N;
     }
     return N;
@@ -105,13 +109,32 @@ void Q_sort(DATA *temp,int size)
         }
     }
 }
+void Q_sort2(DATA *temp,int size)
+{
+    DATA T;
+    for(int i=0;i<size-1;i++)
+    {
+        for(int j=0;j<size-1-i;j++)
+        {
+            if(temp[j].number>temp[j+1].number)
+            {
+                T=temp[j];
+                temp[j]=temp[j+1];
+                temp[j+1]=T;
+                //cout <<"change"<<endl;
+            }
+        }
+    }
+}
 void give_final_rank(DATA *temp,int num,int size)
 {
     int N=0,T=0;
     for(int i=0;i<size;i++)
     {
         N=get_CD(temp,0,i);
+        Q_sort2(&temp[i],N+1);
         temp[num+i].final_rank=i+1;
+        
         for (int j = 0; j < N; j++)
         {
             temp[num+i+j+1].final_rank=i+1;
